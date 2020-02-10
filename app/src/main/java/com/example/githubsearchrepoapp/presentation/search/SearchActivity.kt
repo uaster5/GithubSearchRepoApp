@@ -1,20 +1,20 @@
 package com.example.githubsearchrepoapp.presentation.search
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.githubsearchrepoapp.R
-import com.example.githubsearchrepoapp.domain.search.model.SearchResult
+import com.example.githubsearchrepoapp.domain.search.model.RepoModel
+import com.example.githubsearchrepoapp.domain.search.model.network.Status
+import com.example.githubsearchrepoapp.presentation.search.adapter.SearchResultListAdapter
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -32,14 +32,24 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        adapter = SearchResultListAdapter()
+        adapter = SearchResultListAdapter({ viewModel.deleteRepo(it) },
+            { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it))) })
+
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         list.addItemDecoration(decoration)
-
         list.adapter = adapter
-        viewModel.reposLiveData.observe(this, Observer<PagedList<SearchResult>> {
-           // showEmptyList(it?.size == 0)
+        viewModel.reposLiveData.observe(this, Observer<PagedList<RepoModel>> {
             adapter.submitList(it)
+        })
+        viewModel.networkState.observe(this, Observer {
+            when (it.status) {
+                Status.RUNNING -> progressBar.visibility = View.VISIBLE
+                Status.SUCCESS -> progressBar.visibility = View.GONE
+                Status.FAILED -> {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(this, it.msg, Toast.LENGTH_LONG).show()
+                }
+            }
         })
     }
 
@@ -57,15 +67,5 @@ class SearchActivity : AppCompatActivity() {
             true
         }
 
-    }
-
-    private fun showEmptyList(show: Boolean) {
-        if (show) {
-            emptyList.visibility = View.VISIBLE
-            list.visibility = View.GONE
-        } else {
-            emptyList.visibility = View.GONE
-            list.visibility = View.VISIBLE
-        }
     }
 }

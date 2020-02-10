@@ -5,6 +5,6 @@ import com.example.githubsearchrepoapp.domain.search.repository.SearchRepository
 class DeleteStoredRepoUseCase(
     private val repository: SearchRepository
 ) {
-    suspend operator fun invoke(query: String): Unit =
-        repository.deleteStoredRepo(query)
+    suspend operator fun invoke(id: Int): Unit =
+        repository.deleteStoredRepo(id)
 }

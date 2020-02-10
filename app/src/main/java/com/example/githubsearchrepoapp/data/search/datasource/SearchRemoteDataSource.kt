@@ -1,7 +1,7 @@
 package com.example.githubsearchrepoapp.data.search.datasource
 
 import com.example.githubsearchrepoapp.data.search.api.SearchApi
-import com.example.githubsearchrepoapp.data.search.dto.SearchResultDto
+import com.example.githubsearchrepoapp.data.search.dto.RepoModelDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ class SearchRemoteDataSource(private val api: SearchApi) {
         page: Int,
         perPage: Int
     ) = api.search(
-        query,
+        query + IN_QUALIFIER,
         SEARCH_SORT_TYPE,
         SEARCH_ORDER,
         page,
@@ -25,5 +25,6 @@ class SearchRemoteDataSource(private val api: SearchApi) {
     private companion object {
         const val SEARCH_SORT_TYPE = "stars"
         const val SEARCH_ORDER = "desc"
+        const val IN_QUALIFIER = "in:name,description"
     }
 }

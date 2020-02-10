@@ -8,11 +8,11 @@ import com.example.githubsearchrepoapp.data.search.SearchDataRepository
 import com.example.githubsearchrepoapp.data.search.api.SearchApi
 import com.example.githubsearchrepoapp.data.search.datasource.SearchLocalDataSource
 import com.example.githubsearchrepoapp.data.search.datasource.SearchRemoteDataSource
-import com.example.githubsearchrepoapp.data.search.dto.SearchResultDto
+import com.example.githubsearchrepoapp.data.search.dto.RepoModelDto
 import com.example.githubsearchrepoapp.data.search.mapper.SearchedRepoMapper
 import com.example.githubsearchrepoapp.domain.search.interactor.DeleteStoredRepoUseCase
 import com.example.githubsearchrepoapp.domain.search.interactor.SearchUseCase
-import com.example.githubsearchrepoapp.domain.search.model.SearchResult
+import com.example.githubsearchrepoapp.domain.search.model.RepoModel
 import com.example.githubsearchrepoapp.domain.search.repository.SearchRepository
 import com.example.githubsearchrepoapp.presentation.search.SearchViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -44,14 +44,14 @@ val appModule = module {
     single<SearchRepository> { SearchDataRepository(get(), get(), get()) }
 
     //Mapper
-    single<Mapper<SearchResultDto, SearchResult>> { SearchedRepoMapper() }
+    single<Mapper<RepoModelDto, RepoModel>> { SearchedRepoMapper() }
 
     // Interactor
     single { SearchUseCase(get()) }
     single { DeleteStoredRepoUseCase(get()) }
 
     // ViewModel
-    viewModel { SearchViewModel(get()) }
+    viewModel { SearchViewModel(get(), get()) }
 }
 
 fun provideRetrofit(): Retrofit =

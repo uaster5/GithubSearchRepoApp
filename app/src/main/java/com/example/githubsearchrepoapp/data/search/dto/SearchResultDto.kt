@@ -6,7 +6,7 @@ import com.example.githubsearchrepoapp.data.search.dao.SearchDao
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = SearchDao.TABLE_NAME)
-data class SearchResultDto(
+data class RepoModelDto(
     @PrimaryKey
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,

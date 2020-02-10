@@ -3,5 +3,6 @@
     <string name="loading">Loading</string>
     <string name="unknown">Unknown</string>
     <string name="no_results">No Result</string>
-    <string name="language">Language:</string>
+    <string name="remove">Remove:</string>
+
 </resources>
