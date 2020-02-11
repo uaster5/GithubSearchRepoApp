@@ -9,7 +9,7 @@ import com.example.githubsearchrepoapp.data.search.datasource.SearchLocalDataSou
 import com.example.githubsearchrepoapp.data.search.datasource.SearchRemoteDataSource
 import com.example.githubsearchrepoapp.data.search.dto.RepoModelDto
 import com.example.githubsearchrepoapp.domain.search.model.Listing
-import com.example.githubsearchrepoapp.presentation.search.adapter.BoundaryCondition
+import com.example.githubsearchrepoapp.data.search.utils.BoundaryCondition
 import kotlinx.coroutines.CoroutineScope
 
 class SearchDataRepository(

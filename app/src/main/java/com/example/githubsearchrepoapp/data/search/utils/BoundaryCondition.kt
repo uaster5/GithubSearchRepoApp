@@ -1,4 +1,4 @@
-package com.example.githubsearchrepoapp.presentation.search.adapter
+package com.example.githubsearchrepoapp.data.search.utils
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
