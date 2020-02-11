@@ -31,7 +31,7 @@ class BoundaryCondition(
 
     private fun requestAndSaveData(query: String) {
         scope.launch {
-            if (networkState.value == NetworkState.LOADED) {
+            if (networkState.value != NetworkState.LOADING) {
                 networkState.postValue(NetworkState.LOADING)
                 try {
                     val repos = service.search(query, lastRequestedPage, pageSize)

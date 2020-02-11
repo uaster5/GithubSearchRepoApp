@@ -19,7 +19,7 @@ class SearchLocalDataSource(db: ApplicationDatabase) {
 
 
     fun search(query: String): DataSource.Factory<Int, RepoModelDto> =
-        dao.searchRepo(query)
+        dao.searchRepo("%$query%")
 
     suspend fun deleteById(id: Int) {
         dao.deleteById(id)
